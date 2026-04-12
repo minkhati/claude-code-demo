@@ -15,7 +15,7 @@
 <nav>
   <div class="container">
     <div class="nav-inner">
-      <a href="#" class="logo">neuron<span>.</span></a>
+      <a href="#" class="logo">neuron</a>
       <ul class="nav-links">
         <li><a href="#courses">Courses</a></li>
         <li><a href="#features">How it works</a></li>
@@ -28,20 +28,32 @@
 </nav>
 
 <!-- ── Hero ── -->
-<section>
+<section class="hero-section">
   <div class="container">
     <div class="hero">
       <div class="hero-copy">
-        <div class="hero-eyebrow">Now in open beta</div>
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-dot"></span>
+          Now in open beta
+        </div>
         <h1>Master <em>Artificial Intelligence</em> at your own pace</h1>
-        <p>Structured, project-driven courses that take you from zero to deployment — no prior experience required.</p>
+        <p class="hero-lead">Structured, project-driven courses that take you from zero to deployment — no prior experience required.</p>
         <div class="btn-group">
           <a href="#" class="btn-primary">Start learning free</a>
           <a href="#courses" class="btn-secondary">Browse courses</a>
         </div>
       </div>
-      <div class="hero-image">
-        <img src="https://placehold.co/800x600/6c63ff/ffffff?text=AI+Learning" alt="Hero visual" />
+      <div class="hero-visual">
+        <div class="hero-blob-card">
+          <div class="hero-blob-inner">
+            <div class="hero-blob-shape"></div>
+            <div class="hero-blob-pills">
+              <span class="hero-pill">🧠 Neural Networks</span>
+              <span class="hero-pill">⚡ Deep Learning</span>
+              <span class="hero-pill">🤖 LLMs</span>
+            </div>
+          </div>
+        </div>
         <div class="hero-badge">
           <div class="hero-badge-icon">🎓</div>
           <div>
@@ -57,7 +69,7 @@
 <!-- ── Stats ── -->
 <section class="stats">
   <div class="container">
-    <div class="stats-grid">
+    <div class="stats-inner">
       <div class="stat">
         <div class="stat-number">48<span>+</span></div>
         <div class="stat-label">Curated courses</div>
@@ -90,7 +102,7 @@
 
       <div class="course-card">
         <div class="course-image">
-          <img src="https://placehold.co/640x360/0a0a0a/6c63ff?text=Intro+to+AI" alt="Intro to AI" />
+          <img src="https://placehold.co/640x360/c8c0ff/5a50d4?text=Intro+to+AI" alt="Intro to AI" />
         </div>
         <div class="course-body">
           <span class="course-tag">Beginner</span>
@@ -105,7 +117,7 @@
 
       <div class="course-card">
         <div class="course-image">
-          <img src="https://placehold.co/640x360/4e46d4/ede9ff?text=Machine+Learning" alt="Machine Learning" />
+          <img src="https://placehold.co/640x360/b5f5ec/28a89a?text=Machine+Learning" alt="Machine Learning" />
         </div>
         <div class="course-body">
           <span class="course-tag">Intermediate</span>
@@ -120,7 +132,7 @@
 
       <div class="course-card">
         <div class="course-image">
-          <img src="https://placehold.co/640x360/1a1a2e/6c63ff?text=Neural+Networks" alt="Neural Networks" />
+          <img src="https://placehold.co/640x360/fff3b0/c05000?text=Neural+Networks" alt="Neural Networks" />
         </div>
         <div class="course-body">
           <span class="course-tag">Advanced</span>
@@ -137,44 +149,61 @@
   </div>
 </section>
 
-<!-- ── Features ── -->
+<!-- ── Bento Features ── -->
 <section class="features" id="features">
   <div class="container">
-
-    <div class="feature-row">
-      <div class="feature-image">
-        <img src="https://placehold.co/720x540/ede9ff/6c63ff?text=Interactive+Labs" alt="Interactive labs" />
-      </div>
-      <div class="feature-text">
-        <div class="section-tag">Hands-on learning</div>
-        <h2>Run code directly in your browser</h2>
-        <p>No environment setup. Every lesson comes with an embedded code editor — experiment and iterate without leaving the page.</p>
-        <ul class="feature-list">
-          <li>Pre-loaded datasets for every exercise</li>
-          <li>Instant output and error feedback</li>
-          <li>Save and share your notebooks</li>
-        </ul>
-        <a href="#" class="btn-primary">Try a free lab</a>
-      </div>
+    <div class="section-header">
+      <div class="section-tag">How it works</div>
+      <h2>Everything you need to go from zero to deployed</h2>
+      <p>A learning environment designed around how people actually learn best.</p>
     </div>
+    <div class="bento-grid">
 
-    <div class="feature-row reverse">
-      <div class="feature-image">
-        <img src="https://placehold.co/720x540/f7f7f7/0a0a0a?text=Personalized+Path" alt="Personalized learning path" />
+      <!-- Wide card: browser labs -->
+      <div class="bento-card bento-card--wide">
+        <div class="bento-illus">💻</div>
+        <div class="bento-text">
+          <div class="bento-tag">Hands-on learning</div>
+          <h3>Run code directly in your browser</h3>
+          <p>No environment setup. Every lesson comes with an embedded code editor — experiment and iterate without leaving the page.</p>
+          <ul class="bento-list">
+            <li>Pre-loaded datasets for every exercise</li>
+            <li>Instant output and error feedback</li>
+            <li>Save and share your notebooks</li>
+          </ul>
+        </div>
       </div>
-      <div class="feature-text">
-        <div class="section-tag">Adaptive curriculum</div>
-        <h2>A path built around how you learn</h2>
-        <p>Our AI-powered recommendation engine tracks your progress and suggests what to tackle next — so you always move forward without getting lost.</p>
-        <ul class="feature-list">
-          <li>Skill-gap analysis after each module</li>
-          <li>Spaced-repetition review reminders</li>
-          <li>Weekly progress reports</li>
-        </ul>
-        <a href="#" class="btn-primary">Explore the curriculum</a>
+
+      <!-- Tall dark card: adaptive path -->
+      <div class="bento-card bento-card--tall">
+        <div class="bento-icon">🗺️</div>
+        <div class="bento-tag bento-tag--dark">Adaptive</div>
+        <h3>A path built around you</h3>
+        <p>Our AI tracks your progress and always suggests what to tackle next.</p>
       </div>
+
+      <!-- Small yellow: progress -->
+      <div class="bento-card bento-card--yellow">
+        <div class="bento-tag bento-tag--yellow">Progress</div>
+        <h3>Weekly reports & streaks</h3>
+        <p>Stay on track with spaced-repetition reminders and visual progress maps.</p>
+      </div>
+
+      <!-- Small teal: community -->
+      <div class="bento-card bento-card--teal">
+        <div class="bento-tag bento-tag--teal">Community</div>
+        <h3>Learn alongside 200k+ peers</h3>
+        <p>Forums, study groups, and live office hours with instructors.</p>
+      </div>
+
+      <!-- Small coral: certificates -->
+      <div class="bento-card bento-card--coral">
+        <div class="bento-tag bento-tag--coral">Credentials</div>
+        <h3>Earn shareable certificates</h3>
+        <p>LinkedIn-ready certificates for every course and learning path completed.</p>
+      </div>
+
     </div>
-
   </div>
 </section>
 
@@ -207,7 +236,7 @@
         <blockquote>"Every other platform overwhelmed me with theory. Neuron clicked because I was building things from lesson one. Genuinely the best AI course I've taken."</blockquote>
         <div class="testimonial-author">
           <div class="author-avatar">
-            <img src="https://placehold.co/88x88/0a0a0a/6c63ff?text=JW" alt="James W." />
+            <img src="https://placehold.co/88x88/ede9ff/6c63ff?text=JW" alt="James W." />
           </div>
           <div>
             <div class="author-name">James W.</div>
@@ -221,7 +250,7 @@
         <blockquote>"The in-browser labs are a game-changer. I used to spend the first hour of every session fixing my Python environment — not anymore."</blockquote>
         <div class="testimonial-author">
           <div class="author-avatar">
-            <img src="https://placehold.co/88x88/4e46d4/ede9ff?text=MR" alt="Maya R." />
+            <img src="https://placehold.co/88x88/b5f5ec/28a89a?text=MR" alt="Maya R." />
           </div>
           <div>
             <div class="author-name">Maya R.</div>
@@ -234,12 +263,60 @@
   </div>
 </section>
 
-<!-- ── CTA Banner ── -->
-<section class="cta-banner">
+<!-- ── Gallery ── -->
+<section class="gallery">
   <div class="container">
-    <h2>Start learning <em>AI</em> today — it's free</h2>
-    <p>No credit card required. Cancel anytime. Your first 3 courses are on us.</p>
-    <a href="#" class="btn-white">Create free account</a>
+    <div class="section-header">
+      <div class="section-tag">Student work</div>
+      <h2>See what our learners build</h2>
+      <p>Real projects shipped by real students — from first line to production.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-card">
+        <div class="gallery-blob"></div>
+        <span class="gallery-card-label">Image Classifier</span>
+      </div>
+      <div class="gallery-card">
+        <div class="gallery-blob"></div>
+        <span class="gallery-card-label">Chatbot</span>
+      </div>
+      <div class="gallery-card">
+        <div class="gallery-blob"></div>
+        <span class="gallery-card-label">Sentiment Analysis</span>
+      </div>
+      <div class="gallery-card">
+        <div class="gallery-blob"></div>
+        <span class="gallery-card-label">Price Predictor</span>
+      </div>
+      <div class="gallery-card">
+        <div class="gallery-blob"></div>
+        <span class="gallery-card-label">Recommendation Engine</span>
+      </div>
+      <div class="gallery-card">
+        <div class="gallery-blob"></div>
+        <span class="gallery-card-label">Generative Art</span>
+      </div>
+      <div class="gallery-card">
+        <div class="gallery-blob"></div>
+        <span class="gallery-card-label">Fraud Detector</span>
+      </div>
+      <div class="gallery-card">
+        <div class="gallery-blob"></div>
+        <span class="gallery-card-label">Voice Assistant</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <h2>Try for free.<br/>No credit card required.</h2>
+      <p>Your first 3 courses are on us. Cancel anytime.</p>
+      <a href="#" class="btn-cta">Create free account</a>
+      <p class="cta-footnote">Join 200,000+ learners already on Neuron</p>
+    </div>
   </div>
 </section>
 
@@ -248,7 +325,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="#" class="logo">neuron<span>.</span></a>
+        <a href="#" class="footer-logo">neuron</a>
         <p>Making world-class AI education accessible to everyone, everywhere.</p>
       </div>
       <div class="footer-col">

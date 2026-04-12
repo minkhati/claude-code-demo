@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neuron — Learn AI from the Ground Up</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0a0a0a;
+      --white:   #ffffff;
+      --gray-50: #f7f7f7;
+      --gray-100:#efefef;
+      --gray-400:#999999;
+      --gray-600:#555555;
+      --accent:  #6c63ff;
+      --accent-light: #ede9ff;
+      --accent-dark:  #4e46d4;
+      --radius:  12px;
+      --max:     1200px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Navbar ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.88);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      color: var(--gray-600);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    .nav-cta {
+      background: var(--black);
+      color: var(--white);
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 96px 0 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      max-width: 480px;
+      margin-bottom: 40px;
+      line-height: 1.75;
+    }
+
+    .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      padding: 14px 30px;
+      border-radius: 100px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--black);
+      padding: 14px 30px;
+      border-radius: 100px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: 1.5px solid var(--gray-100);
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .btn-secondary:hover { border-color: var(--gray-400); transform: translateY(-1px); }
+
+    .hero-image {
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--gray-50);
+      position: relative;
+    }
+
+    .hero-image img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .hero-badge-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .hero-badge-sublabel {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      font-weight: 400;
+    }
+
+    .hero-badge-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--accent-light);
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+    }
+
+    /* ── Stats ── */
+    .stats {
+      padding: 40px 0;
+      border-top: 1px solid var(--gray-100);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .stat {
+      text-align: center;
+      padding: 24px;
+    }
+
+    .stat-number {
+      font-size: 2.25rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: var(--black);
+    }
+
+    .stat-number span { color: var(--accent); }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--gray-400);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ── Section header ── */
+    .section-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 64px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      color: var(--gray-600);
+      font-size: 1.05rem;
+    }
+
+    /* ── Courses ── */
+    .courses { padding: 96px 0; background: var(--gray-50); }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .course-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--gray-100);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.08);
+    }
+
+    .course-image {
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: var(--gray-100);
+    }
+
+    .course-image img { height: 100%; object-fit: cover; }
+
+    .course-body { padding: 24px; }
+
+    .course-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+
+    .course-body h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .course-body p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .course-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--gray-400);
+      border-top: 1px solid var(--gray-100);
+      padding-top: 16px;
+    }
+
+    .course-meta strong { color: var(--black); }
+
+    /* ── Features ── */
+    .features { padding: 96px 0; }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-bottom: 96px;
+    }
+
+    .feature-row:last-child { margin-bottom: 0; }
+
+    .feature-row.reverse .feature-image { order: 2; }
+    .feature-row.reverse .feature-text  { order: 1; }
+
+    .feature-image {
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--gray-100);
+    }
+
+    .feature-image img { height: 100%; object-fit: cover; }
+
+    .feature-text h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .feature-text p {
+      color: var(--gray-600);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .feature-list li::before {
+      content: '✓';
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    /* ── Testimonials ── */
+    .testimonials { padding: 96px 0; background: var(--gray-50); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px;
+      border: 1px solid var(--gray-100);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .stars { color: #f4b400; font-size: 0.9rem; letter-spacing: 2px; }
+
+    .testimonial-card blockquote {
+      font-size: 0.98rem;
+      line-height: 1.75;
+      color: var(--gray-600);
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--gray-100);
+    }
+
+    .author-avatar img { height: 100%; object-fit: cover; }
+
+    .author-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .author-title {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+    }
+
+    /* ── CTA Banner ── */
+    .cta-banner {
+      background: var(--black);
+      color: var(--white);
+      padding: 96px 0;
+      text-align: center;
+    }
+
+    .cta-banner h2 {
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      max-width: 700px;
+      margin: 0 auto 20px;
+      line-height: 1.1;
+    }
+
+    .cta-banner h2 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .cta-banner p {
+      font-size: 1.05rem;
+      color: var(--gray-400);
+      margin-bottom: 40px;
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--black);
+      padding: 16px 36px;
+      border-radius: 100px;
+      font-size: 1rem;
+      font-weight: 700;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-white:hover { background: var(--accent); color: var(--white); transform: translateY(-1px); }
+
+    /* ── Footer ── */
+    footer {
+      padding: 56px 0 40px;
+      border-top: 1px solid var(--gray-100);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: var(--gray-400);
+      line-height: 1.65;
+      margin-top: 12px;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col ul a {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover { color: var(--black); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid var(--gray-100);
+      font-size: 0.82rem;
+      color: var(--gray-400);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .hero          { grid-template-columns: 1fr; gap: 48px; padding: 64px 0 56px; }
+      .hero-image    { order: -1; }
+      .stats-grid    { grid-template-columns: repeat(2, 1fr); }
+      .courses-grid  { grid-template-columns: 1fr; }
+      .feature-row   { grid-template-columns: 1fr; gap: 40px; }
+      .feature-row.reverse .feature-image { order: 0; }
+      .feature-row.reverse .feature-text  { order: 0; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-grid   { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .nav-links     { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .stats-grid  { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navbar ── -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="logo">neuron<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#features">How it works</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#">Pricing</a></li>
+      </ul>
+      <a href="#" class="nav-cta">Get started free</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="hero-eyebrow">Now in open beta</div>
+        <h1>Master <em>Artificial Intelligence</em> at your own pace</h1>
+        <p>Structured, project-driven courses that take you from zero to deployment — no prior experience required.</p>
+        <div class="btn-group">
+          <a href="#" class="btn-primary">Start learning free</a>
+          <a href="#courses" class="btn-secondary">Browse courses</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="https://placehold.co/800x600/6c63ff/ffffff?text=AI+Learning" alt="Hero visual" />
+        <div class="hero-badge">
+          <div class="hero-badge-icon">🎓</div>
+          <div>
+            <div class="hero-badge-label">12,400+ students</div>
+            <div class="hero-badge-sublabel">enrolled this month</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Stats ── -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-number">48<span>+</span></div>
+        <div class="stat-label">Curated courses</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">200<span>k</span></div>
+        <div class="stat-label">Active learners</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">94<span>%</span></div>
+        <div class="stat-label">Completion rate</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">4.9<span>★</span></div>
+        <div class="stat-label">Average rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Courses ── -->
+<section class="courses" id="courses">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Curriculum</div>
+      <h2>Learn AI from first principles</h2>
+      <p>Every course is project-based — you'll build real things, not just watch videos.</p>
+    </div>
+    <div class="courses-grid">
+
+      <div class="course-card">
+        <div class="course-image">
+          <img src="https://placehold.co/640x360/0a0a0a/6c63ff?text=Intro+to+AI" alt="Intro to AI" />
+        </div>
+        <div class="course-body">
+          <span class="course-tag">Beginner</span>
+          <h3>Introduction to Artificial Intelligence</h3>
+          <p>Understand how AI works, where it came from, and what problems it solves — in plain English.</p>
+          <div class="course-meta">
+            <span><strong>8</strong> lessons · 3h</span>
+            <span>Free</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <div class="course-image">
+          <img src="https://placehold.co/640x360/4e46d4/ede9ff?text=Machine+Learning" alt="Machine Learning" />
+        </div>
+        <div class="course-body">
+          <span class="course-tag">Intermediate</span>
+          <h3>Machine Learning Fundamentals</h3>
+          <p>Build your first models with Python and scikit-learn. Regression, classification, and beyond.</p>
+          <div class="course-meta">
+            <span><strong>24</strong> lessons · 12h</span>
+            <span>$49</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <div class="course-image">
+          <img src="https://placehold.co/640x360/1a1a2e/6c63ff?text=Neural+Networks" alt="Neural Networks" />
+        </div>
+        <div class="course-body">
+          <span class="course-tag">Advanced</span>
+          <h3>Neural Networks & Deep Learning</h3>
+          <p>From backpropagation to transformers — implement architectures that power modern AI.</p>
+          <div class="course-meta">
+            <span><strong>36</strong> lessons · 20h</span>
+            <span>$79</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ── -->
+<section class="features" id="features">
+  <div class="container">
+
+    <div class="feature-row">
+      <div class="feature-image">
+        <img src="https://placehold.co/720x540/ede9ff/6c63ff?text=Interactive+Labs" alt="Interactive labs" />
+      </div>
+      <div class="feature-text">
+        <div class="section-tag">Hands-on learning</div>
+        <h2>Run code directly in your browser</h2>
+        <p>No environment setup. Every lesson comes with an embedded code editor — experiment and iterate without leaving the page.</p>
+        <ul class="feature-list">
+          <li>Pre-loaded datasets for every exercise</li>
+          <li>Instant output and error feedback</li>
+          <li>Save and share your notebooks</li>
+        </ul>
+        <a href="#" class="btn-primary">Try a free lab</a>
+      </div>
+    </div>
+
+    <div class="feature-row reverse">
+      <div class="feature-image">
+        <img src="https://placehold.co/720x540/f7f7f7/0a0a0a?text=Personalized+Path" alt="Personalized learning path" />
+      </div>
+      <div class="feature-text">
+        <div class="section-tag">Adaptive curriculum</div>
+        <h2>A path built around how you learn</h2>
+        <p>Our AI-powered recommendation engine tracks your progress and suggests what to tackle next — so you always move forward without getting lost.</p>
+        <ul class="feature-list">
+          <li>Skill-gap analysis after each module</li>
+          <li>Spaced-repetition review reminders</li>
+          <li>Weekly progress reports</li>
+        </ul>
+        <a href="#" class="btn-primary">Explore the curriculum</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Testimonials ── -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Reviews</div>
+      <h2>Trusted by learners worldwide</h2>
+      <p>Don't take our word for it. Here's what students say after completing their first course.</p>
+    </div>
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I went from knowing nothing about ML to deploying my first model in six weeks. The pace is perfect and the projects actually make sense."</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="https://placehold.co/88x88/ede9ff/6c63ff?text=SL" alt="Sofia L." />
+          </div>
+          <div>
+            <div class="author-name">Sofia L.</div>
+            <div class="author-title">Product Designer → ML Engineer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Every other platform overwhelmed me with theory. Neuron clicked because I was building things from lesson one. Genuinely the best AI course I've taken."</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="https://placehold.co/88x88/0a0a0a/6c63ff?text=JW" alt="James W." />
+          </div>
+          <div>
+            <div class="author-name">James W.</div>
+            <div class="author-title">Software Engineer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The in-browser labs are a game-changer. I used to spend the first hour of every session fixing my Python environment — not anymore."</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="https://placehold.co/88x88/4e46d4/ede9ff?text=MR" alt="Maya R." />
+          </div>
+          <div>
+            <div class="author-name">Maya R.</div>
+            <div class="author-title">Data Analyst</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA Banner ── -->
+<section class="cta-banner">
+  <div class="container">
+    <h2>Start learning <em>AI</em> today — it's free</h2>
+    <p>No credit card required. Cancel anytime. Your first 3 courses are on us.</p>
+    <a href="#" class="btn-white">Create free account</a>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">neuron<span>.</span></a>
+        <p>Making world-class AI education accessible to everyone, everywhere.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="#">All courses</a></li>
+          <li><a href="#">Learning paths</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Certifications</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help centre</a></li>
+          <li><a href="#">Community</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Neuron Inc. All rights reserved.</span>
+      <span>Designed with intention.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

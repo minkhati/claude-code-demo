@@ -1,0 +1,1 @@
+- [Neuron AI Education Website](project_neuron_site.md) — static HTML/CSS landing page, no JS, no forms, placehold.co images, Google Fonts
